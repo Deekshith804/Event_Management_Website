@@ -1,0 +1,2505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EVENT EASE | College Event Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+        /* Reset and base styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --primary-light: #93c5fd;
+            --secondary: #64748b;
+            --secondary-dark: #475569;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+            --card-bg: #ffffff;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --shadow-hover: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f1f5f9;
+            transition: background-image 0.5s ease;
+        }
+        
+        /* Background classes */
+        .bg-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), #3b82f6;
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+        
+        .bg-events {
+            background-color: #f1f5f9;
+            color: var(--dark);
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        /* Header */
+        .site-header {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+        
+        .brand {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .brand svg {
+            height: 2rem;
+            width: auto;
+            margin-right: 0.5rem;
+        }
+        
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+        }
+        
+        .site-nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        
+        .site-nav a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: color 0.2s;
+        }
+        
+        .site-nav a:hover,
+        .site-nav a.active {
+            color: var(--primary);
+        }
+        
+        .site-nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: white;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            border-radius: 0.375rem;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+        
+        .btn:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+        
+        .btn.primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn.primary:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .btn.secondary {
+            background-color: var(--secondary);
+            color: white;
+            border-color: var(--secondary);
+        }
+        
+        .btn.secondary:hover {
+            background-color: var(--secondary-dark);
+        }
+        
+        /* Hero section */
+        .hero {
+            padding: 6rem 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        /* Features section */
+        .features {
+            padding: 4rem 0;
+            background-color: white;
+        }
+        
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            color: var(--primary);
+        }
+        
+        .card p {
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+        
+        .card .card-footer {
+            margin-top: auto;
+        }
+        
+        /* Highlight section */
+        .highlight {
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        .highlight h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .bullets {
+            list-style: none;
+            text-align: left;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .bullets li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .bullets li::before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        
+        /* Page content */
+        .page {
+            padding: 2rem 0;
+        }
+        
+        .page h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .page h2 {
+            font-size: 1.8rem;
+            margin: 1.5rem 0 1rem;
+            color: var(--dark);
+        }
+        
+        .page p {
+            margin-bottom: 1rem;
+        }
+        
+        /* Booking forms */
+        .booking-form {
+            max-width: 600px;
+            margin: 2rem 0;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        @media (min-width: 640px) {
+            .form-row {
+                grid-template-columns: 1fr 2fr;
+                align-items: center;
+            }
+        }
+        
+        .form-row label {
+            font-weight: 600;
+        }
+        
+        .form-row input,
+        .form-row select,
+        .form-row textarea {
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 0.375rem;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+        
+        .form-row input:focus,
+        .form-row select:focus,
+        .form-row textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        /* Contact form */
+        .contact-form {
+            max-width: 600px;
+            margin: 2rem 0;
+        }
+        
+        .contact-info {
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow);
+        }
+        
+        /* Map */
+        .map-form {
+            display: flex;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .map-form input {
+            flex: 1;
+            min-width: 200px;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 0.375rem;
+        }
+        
+        .map-wrapper {
+            position: relative;
+            overflow: hidden;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            margin: 1.5rem 0;
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .map-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        
+        /* Footer */
+        .site-footer {
+            background-color: white;
+            border-top: 1px solid var(--border);
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .site-footer nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .site-footer a {
+            color: var(--secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        .site-footer a:hover {
+            color: var(--primary);
+        }
+        
+        /* Payment form */
+        #paymentForm .form-row {
+            grid-template-columns: 1fr;
+        }
+        
+        /* Bookings page */
+        .bookings-list {
+            margin-top: 2rem;
+        }
+        
+        .booking-item {
+            background-color: white;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .booking-info {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .booking-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .nav-toggle {
+                display: block;
+            }
+            
+            .site-nav {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: white;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                padding: 1rem;
+                display: none;
+            }
+            
+            .site-nav.active {
+                display: block;
+            }
+            
+            .site-nav ul {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .footer-inner {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .site-footer nav {
+                justify-content: center;
+            }
+            
+            .booking-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .booking-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+        }
+        
+        /* Page container for SPA */
+        #page-container {
+            min-height: 70vh;
+        }
+        
+        .page-content {
+            display: none;
+        }
+        
+        .page-content.active {
+            display: block;
+        }
+        
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            background-color: var(--success);
+            color: white;
+            border-radius: 0.375rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: transform 0.3s, opacity 0.3s;
+            z-index: 1000;
+            max-width: 300px;
+        }
+        
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .toast.error {
+            background-color: var(--error);
+        }
+        
+        .toast.warning {
+            background-color: var(--warning);
+        }
+        
+        /* Loading spinner */
+        .spinner {
+            width: 40px;
+            height: 40px;
+            margin: 1rem auto;
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Animation for page transitions */
+        .page-content {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Enhanced logo styles */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+        
+        .enhanced-logo {
+            width: 120px;
+            height: 120px;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+        }
+        
+        /* Theme: dark mode variable overrides */
+        body.theme-dark {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --primary-light: #60a5fa;
+            --secondary: #94a3b8;
+            --secondary-dark: #64748b;
+            --light: #0b1220; /* page background */
+            --dark: #e2e8f0;  /* text color */
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+            --card-bg: #0f172a; /* surface */
+            --border: #334155;
+        }
+        
+        body.theme-dark {
+            color: var(--dark);
+            background-color: var(--light);
+        }
+        
+        body.theme-dark.bg-events {
+            background-color: var(--light);
+            color: var(--dark);
+        }
+        
+        body.theme-dark.bg-hero {
+            color: white;
+        }
+        
+        body.theme-dark .site-header {
+            background-color: rgba(15, 23, 42, 0.95);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+        }
+        
+        body.theme-dark .site-nav a {
+            color: var(--dark);
+        }
+        
+        body.theme-dark .features,
+        body.theme-dark .page,
+        body.theme-dark .contact-form {
+            background-color: transparent;
+        }
+        
+        body.theme-dark .card,
+        body.theme-dark .contact-info,
+        body.theme-dark .booking-item {
+            background-color: var(--card-bg);
+            box-shadow: var(--shadow);
+        }
+        
+        body.theme-dark .site-footer {
+            background-color: var(--card-bg);
+            border-top-color: var(--border);
+        }
+        
+        body.theme-dark .btn {
+            background-color: transparent;
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        body.theme-dark .btn.primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        /* Simple switch style */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 48px;
+            height: 28px;
+            vertical-align: middle;
+        }
+        .switch input { display: none; }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #cbd5e1;
+            transition: 0.2s;
+            border-radius: 9999px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px; width: 22px;
+            left: 3px; bottom: 3px;
+            background-color: white;
+            transition: 0.2s;
+            border-radius: 50%;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+        input:checked + .slider {
+            background-color: var(--primary);
+        }
+        input:checked + .slider:before {
+            transform: translateX(20px);
+        }
+        
+        /* Improved accessibility focus styles */
+        :focus-visible {
+            outline: 3px solid var(--primary);
+            outline-offset: 2px;
+        }
+        .btn:focus-visible,
+        a:focus-visible,
+        input:focus-visible,
+        select:focus-visible,
+        textarea:focus-visible {
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+        }
+
+        /* Smooth scrolling (respects reduced motion below) */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Header shrink on scroll */
+        .site-header.shrink .header-inner {
+            padding: 0.5rem 0;
+        }
+
+        /* Scroll-to-top button */
+        .to-top {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 9999px;
+            border: 1px solid var(--border);
+            background-color: white;
+            color: var(--primary);
+            font-weight: 700;
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+            box-shadow: var(--shadow);
+            transform: translateY(120%);
+            opacity: 0;
+            transition: transform 0.25s ease, opacity 0.25s ease, background-color 0.2s ease;
+            z-index: 999;
+        }
+        .to-top:hover {
+            background-color: rgba(59, 130, 246, 0.08);
+        }
+        .to-top.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Respect user motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+            html { scroll-behavior: auto; }
+        }
+    </style>
+</head>
+<body class="bg-hero">
+    <header class="site-header">
+        <div class="container header-inner">
+            <a class="brand" href="#home" aria-label="EVENT EASE home">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 4H8V12H12V4Z" fill="#3B82F6"/>
+                    <path d="M18 4H14V12H18V4Z" fill="#3B82F6"/>
+                    <path d="M24 4H20V12H24V4Z" fill="#3B82F6"/>
+                    <path d="M12 14H8V22H12V14Z" fill="#3B82F6"/>
+                    <path d="M18 14H14V22H18V14Z" fill="#3B82F6"/>
+                    <path d="M24 14H20V22H24V14Z" fill="#3B82F6"/>
+                    <path d="M12 24H8V28H12V24Z" fill="#3B82F6"/>
+                    <path d="M18 24H14V28H18V24Z" fill="#3B82F6"/>
+                    <path d="M24 24H20V28H24V24Z" fill="#3B82F6"/>
+                </svg>
+                EVENT EASE
+            </a>
+            <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+            <nav class="site-nav" aria-label="Primary">
+                <ul>
+                    <li><a href="#home" class="nav-link active" aria-current="page">Home</a></li>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#categories" class="nav-link">Categories</a></li>
+                    <li><a href="#bookings" class="nav-link">My Bookings</a></li>
+                    <li><a href="#map" class="nav-link">Map</a></li>
+                    <li><a id="nav-settings" href="#settings" class="nav-link">Settings</a></li>
+                    <li><a id="nav-login" href="#login" class="nav-link">Login</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="page-container">
+        <!-- Home Page -->
+        <section id="home-page" class="page-content active">
+            <section class="hero">
+                <div class="container">
+                    <div class="logo-container">
+                        <svg class="enhanced-logo" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="logo-gradient" x1="0" y1="0" x2="128" y2="128" gradientUnits="userSpaceOnUse">
+                                    <stop stop-color="#3b82f6"/>
+                                    <stop offset="1" stop-color="#2563eb"/>
+                                </linearGradient>
+                                <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+                                    <feGaussianBlur in="SourceAlpha" stdDeviation="4" />
+                                    <feOffset dx="4" dy="4" result="offsetblur"/>
+                                    <feFlood flood-color="rgba(0,0,0,0.2)"/>
+                                    <feComposite in2="offsetblur" operator="in"/>
+                                    <feMerge>
+                                        <feMergeNode/>
+                                        <feMergeNode in="SourceGraphic"/>
+                                    </feMerge>
+                                </filter>
+                            </defs>
+                            <rect x="10" y="18" width="108" height="100" rx="14" stroke="url(#logo-gradient)" stroke-width="8" filter="url(#shadow)"/>
+                            <line x1="10" y1="42" x2="118" y2="42" stroke="#3b82f6" stroke-width="8"/>
+                            <rect x="30" y="6" width="16" height="24" rx="4" fill="#3b82f6"/>
+                            <rect x="82" y="6" width="16" height="24" rx="4" fill="#3b82f6"/>
+                            <path d="M46 84l12 12 24-28" stroke="#34d399" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+                            <title>EVENT EASE</title>
+                        </svg>
+                    </div>
+                    <h1>Plan. Promote. Participate.</h1>
+                    <p>College event management made simple with EVENT EASE.</p>
+                    <div class="hero-actions">
+                        <a class="btn primary" href="#categories">Explore Categories</a>
+                        <a class="btn" href="#contact">Get in Touch</a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="features">
+                <div class="container grid-3">
+                    <div class="card">
+                        <h3>Effortless Planning</h3>
+                        <p>Create and organize events with clear schedules, venues, and contacts.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Discover Events</h3>
+                        <p>Browse by category: cultural, sports, workshops, tech talks, and more.</p>
+                        <p class="card-footer"><a class="btn primary" href="#categories">Browse Categories</a></p>
+                    </div>
+                    <div class="card">
+                        <h3>Find the Venue</h3>
+                        <p>Use the built‑in map to locate halls, fields, and labs on campus.</p>
+                        <p class="card-footer"><a class="btn" href="#map">Open Map</a></p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="highlight">
+                <div class="container">
+                    <h2>Upcoming Highlights</h2>
+                    <ul class="bullets">
+                        <li>Annual Cultural Fest – Main Auditorium</li>
+                        <li>Inter‑College Sports Meet – Sports Complex</li>
+                        <li>AI & Robotics Workshop – Engineering Block</li>
+                    </ul>
+                </div>
+            </section>
+        </section>
+
+        <!-- About Page -->
+        <section id="about-page" class="page-content">
+            <div class="container page">
+                <h1>About EVENT EASE</h1>
+                <p>
+                    EVENT EASE is a simple, lightweight portal to streamline college event
+                    management. It helps student bodies and coordinators plan schedules,
+                    promote happenings across campus, and guide attendees to the right
+                    venues.
+                </p>
+                <h2>Our Goals</h2>
+                <ul class="bullets">
+                    <li>Simplify event discovery for students and visitors</li>
+                    <li>Provide clear, accessible schedules and locations</li>
+                    <li>Encourage participation across cultural, sports, and technical domains</li>
+                </ul>
+                <h2>How It Works</h2>
+                <p>
+                    Browse events by category, check highlights on the home page, and use the
+                    built‑in map to reach venues faster. For queries or collaborations, reach
+                    us via the contact page.
+                </p>
+                <p>
+                    Ready to participate? Visit the <a href="#categories">Categories</a> page and book your spot in seconds.
+                </p>
+            </div>
+        </section>
+
+        <!-- Categories Page -->
+        <section id="categories-page" class="page-content">
+            <div class="container page">
+                <h1>Event Categories</h1>
+                <div class="grid-3">
+                    <article class="card">
+                        <h3>Cultural</h3>
+                        <p>Music, dance, drama, and arts festivals that celebrate creativity.</p>
+                        <p class="card-footer"><a class="btn primary" href="#cultural">View & Book</a></p>
+                    </article>
+                    <article class="card">
+                        <h3>Sports</h3>
+                        <p>Track, field, indoor, and outdoor games for spirited competition.</p>
+                        <p class="card-footer"><a class="btn primary" href="#sports">View & Book</a></p>
+                    </article>
+                    <article class="card">
+                        <h3>Workshops</h3>
+                        <p>Hands‑on learning sessions led by experts and mentors.</p>
+                        <p class="card-footer"><a class="btn primary" href="#workshops">View & Book</a></p>
+                    </article>
+                    <article class="card">
+                        <h3>Tech Talks</h3>
+                        <p>Seminars and panels on emerging technologies and research.</p>
+                        <p class="card-footer"><a class="btn primary" href="#techtalks">View & Book</a></p>
+                    </article>
+                    <article class="card">
+                        <h3>Hackathons</h3>
+                        <p>Collaborative coding sprints to prototype solutions in time‑bound events.</p>
+                        <p class="card-footer"><a class="btn primary" href="#hackathons">View & Book</a></p>
+                    </article>
+                    <article class="card">
+                        <h3>Social Impact</h3>
+                        <p>Community drives, awareness campaigns, and volunteering.</p>
+                        <p class="card-footer"><a class="btn primary" href="#social">View & Book</a></p>
+                    </article>
+                    <article class="card">
+                        <h3>Literary</h3>
+                        <p>Debates, poetry slams, storytelling, and creative writing.</p>
+                        <p class="card-footer"><a class="btn primary" href="#literary">View & Book</a></p>
+                    </article>
+                    <article class="card">
+                        <h3>E‑Sports</h3>
+                        <p>Console and PC gaming tournaments and showmatches.</p>
+                        <p class="card-footer"><a class="btn primary" href="#esports">View & Book</a></p>
+                    </article>
+                    <article class="card">
+                        <h3>Entrepreneurship</h3>
+                        <p>Start‑up pitches, ideathons, and mentor sessions.</p>
+                        <p class="card-footer"><a class="btn primary" href="#entrepreneurship">View & Book</a></p>
+                    </article>
+                    <article class="card">
+                        <h3>Photography</h3>
+                        <p>Photo walks, exhibitions, and on‑spot contests.</p>
+                        <p class="card-footer"><a class="btn primary" href="#photography">View & Book</a></p>
+                    </article>
+                    <article class="card">
+                        <h3>Quizzes</h3>
+                        <p>General and themed quizzes to test your knowledge.</p>
+                        <p class="card-footer"><a class="btn primary" href="#quizzes">View & Book</a></p>
+                    </article>
+                    <article class="card">
+                        <h3>Alumni Meet</h3>
+                        <p>Networking sessions and talks with alumni.</p>
+                        <p class="card-footer"><a class="btn primary" href="#alumni">View & Book</a></p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Category Pages -->
+        <!-- Cultural -->
+        <section id="cultural-page" class="page-content">
+            <div class="container page booking">
+                <h1>Cultural Events</h1>
+                <p class="bullets">Music, dance, drama, arts — explore upcoming cultural programs and book your spot.</p>
+
+                <div class="grid-3">
+                    <article class="card">
+                        <h3>Music Night</h3>
+                        <p>Main Auditorium • 7:00 PM</p>
+                    </article>
+                    <article class="card">
+                        <h3>Classical Dance</h3>
+                        <p>Open Air Theatre • 6:00 PM</p>
+                    </article>
+                    <article class="card">
+                        <h3>Drama Showcase</h3>
+                        <p>Black Box Theatre • 5:00 PM</p>
+                    </article>
+                </div>
+
+                <h2>Book Your Seat</h2>
+                <form class="booking-form" data-category="Cultural">
+                    <div class="form-row">
+                        <label for="cultural-event">Select Event</label>
+                        <select id="cultural-event" name="event" required>
+                            <option value="Music Night">Music Night</option>
+                            <option value="Classical Dance">Classical Dance</option>
+                            <option value="Drama Showcase">Drama Showcase</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <label for="cultural-name">Name</label>
+                        <input id="cultural-name" name="name" type="text" placeholder="Your name" required />
+                    </div>
+                    <div class="form-row">
+                        <label for="cultural-email">Email</label>
+                        <input id="cultural-email" name="email" type="email" placeholder="you@example.com" required />
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn primary" type="submit">Book Now</button>
+                        <a class="btn" href="#categories">Back to Categories</a>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Sports -->
+        <section id="sports-page" class="page-content">
+            <div class="container page booking">
+                <h1>Sports Events</h1>
+                <p class="bullets">Track, field, indoor and outdoor sports. Register your team or book as a spectator.</p>
+
+                <div class="grid-3">
+                    <article class="card">
+                        <h3>Football Finals</h3>
+                        <p>Sports Ground • 5:00 PM</p>
+                    </article>
+                    <article class="card">
+                        <h3>Badminton Doubles</h3>
+                        <p>Indoor Stadium • 2:00 PM</p>
+                    </article>
+                    <article class="card">
+                        <h3>100m Sprint</h3>
+                        <p>Track Area • 10:00 AM</p>
+                    </article>
+                </div>
+
+                <h2>Book / Register</h2>
+                <form class="booking-form" data-category="Sports">
+                    <div class="form-row">
+                        <label for="sports-event">Select Event</label>
+                        <select id="sports-event" name="event" required>
+                            <option value="Football Finals">Football Finals</option>
+                            <option value="Badminton Doubles">Badminton Doubles</option>
+                            <option value="100m Sprint">100m Sprint</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <label for="sports-name">Name</label>
+                        <input id="sports-name" name="name" type="text" placeholder="Your name" required />
+                    </div>
+                    <div class="form-row">
+                        <label for="sports-email">Email</label>
+                        <input id="sports-email" name="email" type="email" placeholder="you@example.com" required />
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn primary" type="submit">Book Now</button>
+                        <a class="btn" href="#categories">Back to Categories</a>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Workshops -->
+        <section id="workshops-page" class="page-content">
+            <div class="container page booking">
+                <h1>Workshops</h1>
+                <p class="bullets">Hands‑on learning sessions on trending topics, led by mentors.</p>
+
+                <div class="grid-3">
+                    <article class="card">
+                        <h3>Intro to AI</h3>
+                        <p>Engineering Block • 11:00 AM</p>
+                    </article>
+                    <article class="card">
+                        <h3>UI/UX Bootcamp</h3>
+                        <p>Design Studio • 1:00 PM</p>
+                    </article>
+                    <article class="card">
+                        <h3>Robotics 101</h3>
+                        <p>Lab 3 • 3:00 PM</p>
+                    </article>
+                </div>
+
+                <h2>Book Your Seat</h2>
+                <form class="booking-form" data-category="Workshops">
+                    <div class="form-row">
+                        <label for="workshop-event">Select Workshop</label>
+                        <select id="workshop-event" name="event" required>
+                            <option value="Intro to AI">Intro to AI</option>
+                            <option value="UI/UX Bootcamp">UI/UX Bootcamp</option>
+                            <option value="Robotics 101">Robotics 101</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <label for="workshop-name">Name</label>
+                        <input id="workshop-name" name="name" type="text" placeholder="Your name" required />
+                    </div>
+                    <div class="form-row">
+                        <label for="workshop-email">Email</label>
+                        <input id="workshop-email" name="email" type="email" placeholder="you@example.com" required />
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn primary" type="submit">Book Now</button>
+                        <a class="btn" href="#categories">Back to Categories</a>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Tech Talks -->
+        <section id="techtalks-page" class="page-content">
+            <div class="container page booking">
+                <h1>Tech Talks</h1>
+                <p class="bullets">Seminars and panels on emerging technologies and research.</p>
+
+                <div class="grid-3">
+                    <article class="card">
+                        <h3>Cloud Native 101</h3>
+                        <p>Seminar Hall A • 12:00 PM</p>
+                    </article>
+                    <article class="card">
+                        <h3>Future of AI</h3>
+                        <p>Seminar Hall B • 2:00 PM</p>
+                    </article>
+                    <article class="card">
+                        <h3>Cybersecurity Trends</h3>
+                        <p>Seminar Hall C • 4:00 PM</p>
+                    </article>
+                </div>
+
+                <h2>Book Your Seat</h2>
+                <form class="booking-form" data-category="Tech Talks">
+                    <div class="form-row">
+                        <label for="techtalk-event">Select Talk</label>
+                        <select id="techtalk-event" name="event" required>
+                            <option value="Cloud Native 101">Cloud Native 101</option>
+                            <option value="Future of AI">Future of AI</option>
+                            <option value="Cybersecurity Trends">Cybersecurity Trends</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <label for="techtalk-name">Name</label>
+                        <input id="techtalk-name" name="name" type="text" placeholder="Your name" required />
+                    </div>
+                    <div class="form-row">
+                        <label for="techtalk-email">Email</label>
+                        <input id="techtalk-email" name="email" type="email" placeholder="you@example.com" required />
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn primary" type="submit">Book Now</button>
+                        <a class="btn" href="#categories">Back to Categories</a>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Hackathons -->
+        <section id="hackathons-page" class="page-content">
+            <div class="container page booking">
+                <h1>Hackathons</h1>
+                <p class="bullets">Collaborative coding sprints to prototype solutions in time‑bound events.</p>
+
+                <div class="grid-3">
+                    <article class="card">
+                        <h3>24‑Hour Hack</h3>
+                        <p>Innovation Lab • 9:00 AM</p>
+                    </article>
+                    <article class="card">
+                        <h3>Data Challenge</h3>
+                        <p>Computer Center • 10:00 AM</p>
+                    </article>
+                    <article class="card">
+                        <h3>Open Source Sprint</h3>
+                        <p>Seminar Hall • 11:00 AM</p>
+                    </article>
+                </div>
+
+                <h2>Register Your Team</h2>
+                <form class="booking-form" data-category="Hackathons">
+                    <div class="form-row">
+                        <label for="hackathon-event">Select Hackathon</label>
+                        <select id="hackathon-event" name="event" required>
+                            <option value="24‑Hour Hack">24‑Hour Hack</option>
+                            <option value="Data Challenge">Data Challenge</option>
+                            <option value="Open Source Sprint">Open Source Sprint</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <label for="hackathon-name">Team Lead Name</label>
+                        <input id="hackathon-name" name="name" type="text" placeholder="Your name" required />
+                    </div>
+                    <div class="form-row">
+                        <label for="hackathon-email">Email</label>
+                        <input id="hackathon-email" name="email" type="email" placeholder="you@example.com" required />
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn primary" type="submit">Register</button>
+                        <a class="btn" href="#categories">Back to Categories</a>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Social Impact -->
+        <section id="social-page" class="page-content">
+            <div class="container page booking">
+                <h1>Social Impact</h1>
+                <p class="bullets">Community drives, awareness campaigns, and volunteering initiatives.</p>
+
+                <div class="grid-3">
+                    <article class="card">
+                        <h3>Blood Donation Camp</h3>
+                        <p>Health Center • 9:00 AM</p>
+                    </article>
+                    <article class="card">
+                        <h3>Beach Cleanup</h3>
+                        <p>City Beach • 7:00 AM</p>
+                    </article>
+                    <article class="card">
+                        <h3>Tree Plantation</h3>
+                        <p>Campus East • 8:00 AM</p>
+                    </article>
+                </div>
+
+                <h2>Volunteer / Book</h2>
+                <form class="booking-form" data-category="Social Impact">
+                    <div class="form-row">
+                        <label for="social-event">Select Event</label>
+                        <select id="social-event" name="event" required>
+                            <option value="Blood Donation Camp">Blood Donation Camp</option>
+                            <option value="Beach Cleanup">Beach Cleanup</option>
+                            <option value="Tree Plantation">Tree Plantation</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <label for="social-name">Name</label>
+                        <input id="social-name" name="name" type="text" placeholder="Your name" required />
+                    </div>
+                    <div class="form-row">
+                        <label for="social-email">Email</label>
+                        <input id="social-email" name="email" type="email" placeholder="you@example.com" required />
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn primary" type="submit">Book Now</button>
+                        <a class="btn" href="#categories">Back to Categories</a>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Literary -->
+        <section id="literary-page" class="page-content">
+            <div class="container page booking">
+                <h1>Literary</h1>
+                <p class="bullets">Debates, poetry slams, storytelling, and creative writing events.</p>
+
+                <div class="grid-3">
+                    <article class="card">
+                        <h3>Debate Championship</h3>
+                        <p>Auditorium • 11:00 AM</p>
+                    </article>
+                    <article class="card">
+                        <h3>Poetry Slam</h3>
+                        <p>Open Stage • 3:00 PM</p>
+                    </article>
+                    <article class="card">
+                        <h3>Short Story Contest</h3>
+                        <p>Library Hall • 1:00 PM</p>
+                    </article>
+                </div>
+
+                <h2>Book Your Seat</h2>
+                <form class="booking-form" data-category="Literary">
+                    <div class="form-row">
+                        <label for="literary-event">Select Event</label>
+                        <select id="literary-event" name="event" required>
+                            <option value="Debate Championship">Debate Championship</option>
+                            <option value="Poetry Slam">Poetry Slam</option>
+                            <option value="Short Story Contest">Short Story Contest</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <label for="literary-name">Name</label>
+                        <input id="literary-name" name="name" type="text" placeholder="Your name" required />
+                    </div>
+                    <div class="form-row">
+                        <label for="literary-email">Email</label>
+                        <input id="literary-email" name="email" type="email" placeholder="you@example.com" required />
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn primary" type="submit">Book Now</button>
+                        <a class="btn" href="#categories">Back to Categories</a>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- E-Sports -->
+        <section id="esports-page" class="page-content">
+            <div class="container page booking">
+                <h1>E‑Sports</h1>
+                <p class="bullets">Tournaments and showmatches for popular titles.</p>
+
+                <div class="grid-3">
+                    <article class="card">
+                        <h3>Valorant 5v5</h3>
+                        <p>Gaming Lab • 10:00 AM</p>
+                    </article>
+                    <article class="card">
+                        <h3>BGMI Squads</h3>
+                        <p>Auditorium • 1:00 PM</p>
+                    </article>
+                    <article class="card">
+                        <h3>FIFA Knockout</h3>
+                        <p>Lounge • 3:00 PM</p>
+                    </article>
+                </div>
+
+                <h2>Register Team / Book</h2>
+                <form class="booking-form" data-category="E‑Sports">
+                    <div class="form-row">
+                        <label for="esports-event">Select Event</label>
+                        <select id="esports-event" name="event" required>
+                            <option value="Valorant 5v5">Valorant 5v5</option>
+                            <option value="BGMI Squads">BGMI Squads</option>
+                            <option value="FIFA Knockout">FIFA Knockout</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <label for="esports-name">Name</label>
+                        <input id="esports-name" name="name" type="text" placeholder="Your name" required />
+                    </div>
+                    <div class="form-row">
+                        <label for="esports-email">Email</label>
+                        <input id="esports-email" name="email" type="email" placeholder="you@example.com" required />
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn primary" type="submit">Book Now</button>
+                        <a class="btn" href="#categories">Back to Categories</a>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Entrepreneurship -->
+        <section id="entrepreneurship-page" class="page-content">
+            <div class="container page booking">
+                <h1>Entrepreneurship</h1>
+                <p class="bullets">Start‑up pitches, ideathons, and mentor sessions.</p>
+
+                <div class="grid-3">
+                    <article class="card">
+                        <h3>Startup Pitch</h3>
+                        <p>Seminar Hall • 2:00 PM</p>
+                    </article>
+                    <article class="card">
+                        <h3>Ideathon</h3>
+                        <p>Innovation Hub • 11:00 AM</p>
+                    </article>
+                    <article class="card">
+                        <h3>Investor AMA</h3>
+                        <p>Conference Room • 4:00 PM</p>
+                    </article>
+                </div>
+
+                <h2>Register / Book</h2>
+                <form class="booking-form" data-category="Entrepreneurship">
+                    <div class="form-row">
+                        <label for="entre-event">Select Event</label>
+                        <select id="entre-event" name="event" required>
+                            <option value="Startup Pitch">Startup Pitch</option>
+                            <option value="Ideathon">Ideathon</option>
+                            <option value="Investor AMA">Investor AMA</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <label for="entre-name">Name</label>
+                        <input id="entre-name" name="name" type="text" placeholder="Your name" required />
+                    </div>
+                    <div class="form-row">
+                        <label for="entre-email">Email</label>
+                        <input id="entre-email" name="email" type="email" placeholder="you@example.com" required />
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn primary" type="submit">Book Now</button>
+                        <a class="btn" href="#categories">Back to Categories</a>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Photography -->
+        <section id="photography-page" class="page-content">
+            <div class="container page booking">
+                <h1>Photography</h1>
+                <p class="bullets">Photo walks, exhibitions, and on‑spot contests.</p>
+
+                <div class="grid-3">
+                    <article class="card">
+                        <h3>Photo Walk</h3>
+                        <p>Campus • 8:00 AM</p>
+                    </article>
+                    <article class="card">
+                        <h3>Exhibition</h3>
+                        <p>Gallery • 12:00 PM</p>
+                    </article>
+                    <article class="card">
+                        <h3>On‑Spot Contest</h3>
+                        <p>Quadrangle • 2:00 PM</p>
+                    </article>
+                </div>
+
+                <h2>Register / Book</h2>
+                <form class="booking-form" data-category="Photography">
+                    <div class="form-row">
+                        <label for="photo-event">Select Event</label>
+                        <select id="photo-event" name="event" required>
+                            <option value="Photo Walk">Photo Walk</option>
+                            <option value="Exhibition">Exhibition</option>
+                            <option value="On‑Spot Contest">On‑Spot Contest</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <label for="photo-name">Name</label>
+                        <input id="photo-name" name="name" type="text" placeholder="Your name" required />
+                    </div>
+                    <div class="form-row">
+                        <label for="photo-email">Email</label>
+                        <input id="photo-email" name="email" type="email" placeholder="you@example.com" required />
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn primary" type="submit">Book Now</button>
+                        <a class="btn" href="#categories">Back to Categories</a>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Quizzes -->
+        <section id="quizzes-page" class="page-content">
+            <div class="container page booking">
+                <h1>Quizzes</h1>
+                <p class="bullets">General and themed quizzes to test your knowledge.</p>
+
+                <div class="grid-3">
+                    <article class="card">
+                        <h3>General Quiz</h3>
+                        <p>Auditorium • 11:00 AM</p>
+                    </article>
+                    <article class="card">
+                        <h3>Tech Quiz</h3>
+                        <p>Seminar Hall • 1:00 PM</p>
+                    </article>
+                    <article class="card">
+                        <h3>Sports Quiz</h3>
+                        <p>Classroom 204 • 3:00 PM</p>
+                    </article>
+                </div>
+
+                <h2>Register / Book</h2>
+                <form class="booking-form" data-category="Quizzes">
+                    <div class="form-row">
+                        <label for="quiz-event">Select Event</label>
+                        <select id="quiz-event" name="event" required>
+                            <option value="General Quiz">General Quiz</option>
+                            <option value="Tech Quiz">Tech Quiz</option>
+                            <option value="Sports Quiz">Sports Quiz</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <label for="quiz-name">Name</label>
+                        <input id="quiz-name" name="name" type="text" placeholder="Your name" required />
+                    </div>
+                    <div class="form-row">
+                        <label for="quiz-email">Email</label>
+                        <input id="quiz-email" name="email" type="email" placeholder="you@example.com" required />
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn primary" type="submit">Book Now</button>
+                        <a class="btn" href="#categories">Back to Categories</a>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Alumni -->
+        <section id="alumni-page" class="page-content">
+            <div class="container page booking">
+                <h1>Alumni Meet</h1>
+                <p class="bullets">Reconnect with alumni, hear talks, and network.</p>
+
+                <div class="grid-3">
+                    <article class="card">
+                        <h3>Keynote & Networking</h3>
+                        <p>Auditorium • 5:00 PM</p>
+                    </article>
+                    <article class="card">
+                        <h3>Departmental Meetups</h3>
+                        <p>Various Rooms • 3:00 PM</p>
+                    </article>
+                    <article class="card">
+                        <h3>Alumni Panel</h3>
+                        <p>Seminar Hall • 2:00 PM</p>
+                    </article>
+                </div>
+
+                <h2>Register</h2>
+                <form class="booking-form" data-category="Alumni Meet">
+                    <div class="form-row">
+                        <label for="alumni-event">Select Event</label>
+                        <select id="alumni-event" name="event" required>
+                            <option value="Keynote & Networking">Keynote & Networking</option>
+                            <option value="Departmental Meetups">Departmental Meetups</option>
+                            <option value="Alumni Panel">Alumni Panel</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <label for="alumni-name">Name</label>
+                        <input id="alumni-name" name="name" type="text" placeholder="Your name" required />
+                    </div>
+                    <div class="form-row">
+                        <label for="alumni-email">Email</label>
+                        <input id="alumni-email" name="email" type="email" placeholder="you@example.com" required />
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn primary" type="submit">Book Now</button>
+                        <a class="btn" href="#categories">Back to Categories</a>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Bookings Page -->
+        <section id="bookings-page" class="page-content">
+            <div class="container page">
+                <h1>My Bookings</h1>
+                <p>View and manage your event bookings.</p>
+                <div id="bookings-list" class="bookings-list">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Map Page -->
+        <section id="map-page" class="page-content">
+            <div class="container page">
+                <h1>Campus Map</h1>
+                <p>Search for locations like "Main Auditorium", "Sports Complex", or "CSE Block".</p>
+                <form id="mapSearchForm" class="map-form">
+                    <input id="mapQuery" type="text" placeholder="Search campus location" aria-label="Search query" />
+                    <button class="btn primary" type="submit">Search</button>
+                </form>
+                <div class="map-wrapper">
+                    <iframe id="mapFrame" title="Map" loading="lazy" allowfullscreen
+                        referrerpolicy="no-referrer-when-downgrade"
+                        src="https://www.google.com/maps?q=college%20campus&output=embed"></iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- Login Page -->
+        <section id="login-page" class="page-content">
+            <div class="container page">
+                <h1>Login or Sign Up</h1>
+                <div class="card" style="max-width: 640px; margin-top: 1rem;">
+                    <div style="display:flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <button class="btn primary" id="showSignIn" type="button">Sign In</button>
+                        <button class="btn" id="showSignUp" type="button">Sign Up</button>
+                    </div>
+                    <form id="signInForm" class="booking-form" style="margin-top: 1rem;">
+                        <div class="form-row">
+                            <label for="loginEmail">Email</label>
+                            <input id="loginEmail" name="email" type="email" placeholder="you@example.com" required />
+                        </div>
+                        <div class="form-row">
+                            <label for="loginPassword">Password</label>
+                            <input id="loginPassword" name="password" type="password" placeholder="Your password" required />
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn primary" type="submit">Log In</button>
+                        </div>
+                    </form>
+                    <form id="signUpForm" class="booking-form" style="margin-top: 1rem; display:none;">
+                        <div class="form-row">
+                            <label for="signupName">Full Name</label>
+                            <input id="signupName" name="name" type="text" placeholder="Your full name" required />
+                        </div>
+                        <div class="form-row">
+                            <label for="signupEmail">Email</label>
+                            <input id="signupEmail" name="email" type="email" placeholder="you@example.com" required />
+                        </div>
+                        <div class="form-row">
+                            <label for="signupPassword">Password</label>
+                            <input id="signupPassword" name="password" type="password" placeholder="Create a password" required />
+                        </div>
+                        <div class="form-row">
+                            <label for="signupConfirm">Confirm Password</label>
+                            <input id="signupConfirm" name="confirm" type="password" placeholder="Re-enter password" required />
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn primary" type="submit">Create Account</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Settings Page -->
+        <section id="settings-page" class="page-content">
+            <div class="container page">
+                <h1>Settings</h1>
+                <div class="grid-3">
+                    <div class="card" style="grid-column: 1 / -1;">
+                        <h3>Account Details</h3>
+                        <form id="accountForm" class="booking-form" style="margin-top: 1rem;">
+                            <div class="form-row">
+                                <label for="accName">Full Name</label>
+                                <input id="accName" name="name" type="text" placeholder="Your full name" />
+                            </div>
+                            <div class="form-row">
+                                <label for="accEmail">Email</label>
+                                <input id="accEmail" name="email" type="email" placeholder="you@example.com" />
+                            </div>
+                            <div class="form-actions">
+                                <button class="btn primary" type="submit">Save</button>
+                                <button class="btn secondary" id="logoutBtn" type="button" style="margin-left:auto; display:none;">Log Out</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card" style="grid-column: 1 / -1;">
+                        <h3>Appearance</h3>
+                        <div style="display:flex; align-items:center; justify-content: space-between; margin-top: 0.75rem;">
+                            <span>Dark Mode</span>
+                            <label class="switch" aria-label="Toggle dark mode">
+                                <input type="checkbox" id="themeToggle" />
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Page -->
+        <section id="contact-page" class="page-content">
+            <div class="container page">
+                <h1>Contact Us</h1>
+                <p>Have questions or want to collaborate? Send us a message.</p>
+                <form id="contactForm" class="contact-form">
+                    <div class="form-row">
+                        <label for="name">Name</label>
+                        <input id="name" name="name" type="text" placeholder="Your name" required />
+                    </div>
+                    <div class="form-row">
+                        <label for="email">Email</label>
+                        <input id="email" name="email" type="email" placeholder="you@example.com" required />
+                    </div>
+                    <div class="form-row">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" placeholder="How can we help?" required></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn primary" type="submit">Send</button>
+                        <a class="btn" href="mailto:info@eventease.local">Email directly</a>
+                    </div>
+                </form>
+                <div class="contact-info">
+                    <h2>Reach Us</h2>
+                    <p><strong>Email</strong>: info@eventease.local</p>
+                    <p><strong>Phone</strong>: +91 90000 00000</p>
+                    <p><strong>Address</strong>: Your College, City, State</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Payment Page -->
+        <section id="payment-page" class="page-content">
+            <div class="container page">
+                <h1>Payment</h1>
+                <p class="bullets">Review your booking and complete payment securely.</p>
+
+                <div class="card" style="margin-bottom:16px;">
+                    <h3>Booking Summary</h3>
+                    <p><strong>Category:</strong> <span id="summaryCategory"></span></p>
+                    <p><strong>Event:</strong> <span id="summaryEvent"></span></p>
+                    <p><strong>Name:</strong> <span id="summaryName"></span></p>
+                    <p><strong>Email:</strong> <span id="summaryEmail"></span></p>
+                </div>
+
+                <form id="paymentForm" class="booking-form">
+                    <div class="form-row">
+                        <label for="amount">Amount (₹)</label>
+                        <input id="amount" name="amount" type="number" min="0" step="50" value="200" required />
+                    </div>
+                    <div class="form-row">
+                        <label for="method">Payment Method</label>
+                        <select id="method" name="method" required>
+                            <option value="upi">UPI</option>
+                            <option value="card">Credit/Debit Card</option>
+                            <option value="netbanking">Net Banking</option>
+                        </select>
+                    </div>
+                    <div class="form-row" id="upiRow">
+                        <label for="upiId">UPI ID</label>
+                        <input id="upiId" name="upiId" type="text" placeholder="yourname@bank" />
+                    </div>
+                    <div class="form-row" id="cardRow" style="display:none;">
+                        <label for="cardNumber">Card Number</label>
+                        <input id="cardNumber" name="cardNumber" type="text" inputmode="numeric" placeholder="1234 5678 9012 3456" />
+                    </div>
+                    <div class="form-row" id="netRow" style="display:none;">
+                        <label for="bank">Select Bank</label>
+                        <select id="bank" name="bank">
+                            <option>SBI</option>
+                            <option>HDFC</option>
+                            <option>ICICI</option>
+                            <option>Axis</option>
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn primary" type="submit">Pay Now</button>
+                        <a class="btn" href="#categories">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <p>© <span id="year"></span> EVENT EASE</p>
+            <nav aria-label="Footer">
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+    </footer>
+
+    <div id="toast" class="toast"></div>
+
+    <button id="toTop" class="to-top" aria-label="Back to top" title="Back to top">↑</button>
+
+    <script src="app.js"></script>
+    <!-- moved to app.js
+        // Set current year in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Navigation toggle for mobile
+        document.querySelector('.nav-toggle').addEventListener('click', function() {
+            const nav = document.querySelector('.site-nav');
+            nav.classList.toggle('active');
+            this.setAttribute('aria-expanded', nav.classList.contains('active'));
+        });
+
+        // Database setup using IndexedDB
+        const DB_NAME = 'EventEaseDB';
+        const DB_VERSION = 2;
+        const BOOKING_STORE = 'bookings';
+        const CONTACT_STORE = 'contactSubmissions';
+        const USERS_STORE = 'users';
+        const THEME_KEY = 'themePreference';
+        const ACCOUNT_KEY = 'accountDetails';
+
+        let db;
+
+        // Initialize the database
+        function initDatabase() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(DB_NAME, DB_VERSION);
+                
+                request.onerror = () => {
+                    console.error('IndexedDB error:', request.error);
+                    reject(request.error);
+                };
+                
+                request.onsuccess = () => {
+                    db = request.result;
+                    resolve(db);
+                };
+                
+                request.onupgradeneeded = (event) => {
+                    const database = event.target.result;
+                    
+                    // Create bookings store if it doesn't exist
+                    if (!database.objectStoreNames.contains(BOOKING_STORE)) {
+                        const bookingStore = database.createObjectStore(BOOKING_STORE, { 
+                            keyPath: 'id', 
+                            autoIncrement: true 
+                        });
+                        bookingStore.createIndex('email', 'email', { unique: false });
+                        bookingStore.createIndex('event', 'event', { unique: false });
+                        bookingStore.createIndex('date', 'date', { unique: false });
+                    }
+                    
+                    // Create contact submissions store if it doesn't exist
+                    if (!database.objectStoreNames.contains(CONTACT_STORE)) {
+                        const contactStore = database.createObjectStore(CONTACT_STORE, { 
+                            keyPath: 'id', 
+                            autoIncrement: true 
+                        });
+                        contactStore.createIndex('email', 'email', { unique: false });
+                        contactStore.createIndex('date', 'date', { unique: false });
+                    }
+
+                    // Create users store for auth
+                    if (!database.objectStoreNames.contains(USERS_STORE)) {
+                        const users = database.createObjectStore(USERS_STORE, { keyPath: 'email' });
+                        users.createIndex('email', 'email', { unique: true });
+                    }
+                };
+            });
+        }
+
+        // Add a booking to the database
+        function addBooking(booking) {
+            return new Promise((resolve, reject) => {
+                if (!db) {
+                    reject(new Error('Database not initialized'));
+                    return;
+                }
+                
+                const transaction = db.transaction([BOOKING_STORE], 'readwrite');
+                const store = transaction.objectStore(BOOKING_STORE);
+                
+                // Add date to booking
+                booking.date = new Date().toISOString();
+                booking.status = 'confirmed';
+                
+                const request = store.add(booking);
+                
+                request.onsuccess = () => {
+                    resolve(request.result);
+                };
+                
+                request.onerror = () => {
+                    reject(request.error);
+                };
+            });
+        }
+
+        // Get all bookings from the database
+        function getAllBookings() {
+            return new Promise((resolve, reject) => {
+                if (!db) {
+                    reject(new Error('Database not initialized'));
+                    return;
+                }
+                
+                const transaction = db.transaction([BOOKING_STORE], 'readonly');
+                const store = transaction.objectStore(BOOKING_STORE);
+                const request = store.getAll();
+                
+                request.onsuccess = () => {
+                    resolve(request.result);
+                };
+                
+                request.onerror = () => {
+                    reject(request.error);
+                };
+            });
+        }
+
+        // Delete a booking from the database
+        function deleteBooking(id) {
+            return new Promise((resolve, reject) => {
+                if (!db) {
+                    reject(new Error('Database not initialized'));
+                    return;
+                }
+                
+                const transaction = db.transaction([BOOKING_STORE], 'readwrite');
+                const store = transaction.objectStore(BOOKING_STORE);
+                const request = store.delete(id);
+                
+                request.onsuccess = () => {
+                    resolve(true);
+                };
+                
+                request.onerror = () => {
+                    reject(request.error);
+                };
+            });
+        }
+
+        // Add a contact submission to the database
+        function addContactSubmission(contact) {
+            return new Promise((resolve, reject) => {
+                if (!db) {
+                    reject(new Error('Database not initialized'));
+                    return;
+                }
+                
+                const transaction = db.transaction([CONTACT_STORE], 'readwrite');
+                const store = transaction.objectStore(CONTACT_STORE);
+                
+                // Add date to contact
+                contact.date = new Date().toISOString();
+                
+                const request = store.add(contact);
+                
+                request.onsuccess = () => {
+                    resolve(request.result);
+                };
+                
+                request.onerror = () => {
+                    reject(request.error);
+                };
+            });
+        }
+
+        // Router functionality
+        const routes = {
+            'home': 'home-page',
+            'about': 'about-page',
+            'categories': 'categories-page',
+            'cultural': 'cultural-page',
+            'sports': 'sports-page',
+            'workshops': 'workshops-page',
+            'techtalks': 'techtalks-page',
+            'hackathons': 'hackathons-page',
+            'social': 'social-page',
+            'literary': 'literary-page',
+            'esports': 'esports-page',
+            'entrepreneurship': 'entrepreneurship-page',
+            'photography': 'photography-page',
+            'quizzes': 'quizzes-page',
+            'alumni': 'alumni-page',
+            'bookings': 'bookings-page',
+            'map': 'map-page',
+            'contact': 'contact-page',
+            'login': 'login-page',
+            'settings': 'settings-page',
+            'payment': 'payment-page'
+        };
+
+        // Handle navigation
+        function navigateTo(page) {
+            // Auth guard: force login if not authenticated
+            const isAuthenticated = !!getSession();
+            if (!isAuthenticated && page !== 'login') {
+                page = 'login';
+            }
+            // Hide all pages
+            document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
+            
+            // Show the requested page
+            const pageId = routes[page] || 'home-page';
+            document.getElementById(pageId).classList.add('active');
+            
+            // Update body page background class while preserving theme
+            const preserveDark = document.body.classList.contains('theme-dark');
+            document.body.classList.remove('bg-hero', 'bg-events');
+            document.body.classList.add(page === 'home' ? 'bg-hero' : 'bg-events');
+            if (preserveDark) document.body.classList.add('theme-dark');
+            
+            // Update active nav link
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + page) {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Update URL
+            window.location.hash = page;
+            
+            // Close mobile nav if open
+            document.querySelector('.site-nav').classList.remove('active');
+            document.querySelector('.nav-toggle').setAttribute('aria-expanded', 'false');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+            
+            // Special handling for bookings page
+            if (page === 'bookings') {
+                loadBookings();
+            }
+        }
+
+        // Theme helpers
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                document.body.classList.add('theme-dark');
+            } else {
+                document.body.classList.remove('theme-dark');
+            }
+        }
+        
+        function loadThemePreference() {
+            const pref = localStorage.getItem(THEME_KEY) || 'light';
+            applyTheme(pref);
+            const toggle = document.getElementById('themeToggle');
+            if (toggle) toggle.checked = pref === 'dark';
+        }
+        
+        function initThemeToggle() {
+            const toggle = document.getElementById('themeToggle');
+            if (!toggle) return;
+            toggle.addEventListener('change', () => {
+                const theme = toggle.checked ? 'dark' : 'light';
+                applyTheme(theme);
+                localStorage.setItem(THEME_KEY, theme);
+            });
+        }
+
+        // Account helpers
+        function prefillFormsWithAccount(account) {
+            if (!account) return;
+            try {
+                document.querySelectorAll('form .form-row input[name="name"]').forEach(input => {
+                    if (!input.value) input.value = account.name || '';
+                });
+                document.querySelectorAll('form .form-row input[name="email"]').forEach(input => {
+                    if (!input.value) input.value = account.email || '';
+                });
+            } catch (e) {
+                console.warn('Prefill error:', e);
+            }
+        }
+        
+        function loadAccountDetails() {
+            try {
+                const raw = localStorage.getItem(ACCOUNT_KEY);
+                if (!raw) return null;
+                const data = JSON.parse(raw);
+                const nameInput = document.getElementById('accName');
+                const emailInput = document.getElementById('accEmail');
+                if (nameInput) nameInput.value = data.name || '';
+                if (emailInput) emailInput.value = data.email || '';
+                return data;
+            } catch (e) {
+                console.warn('Failed to load account details:', e);
+                return null;
+            }
+        }
+        
+        function initAccountForm() {
+            const form = document.getElementById('accountForm');
+            if (!form) return;
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const name = (document.getElementById('accName')?.value || '').trim();
+                const email = (document.getElementById('accEmail')?.value || '').trim();
+                localStorage.setItem(ACCOUNT_KEY, JSON.stringify({ name, email }));
+                prefillFormsWithAccount({ name, email });
+                showToast('Account details saved.');
+            });
+            const account = loadAccountDetails();
+            prefillFormsWithAccount(account);
+        }
+
+        // --- Simple Auth using IndexedDB ---
+        async function hashText(text) {
+            try {
+                if (window.crypto && window.crypto.subtle) {
+                    const enc = new TextEncoder();
+                    const data = enc.encode(text);
+                    const digest = await crypto.subtle.digest('SHA-256', data);
+                    const arr = Array.from(new Uint8Array(digest));
+                    return arr.map(b => b.toString(16).padStart(2, '0')).join('');
+                }
+            } catch (_) { /* ignore and fallback */ }
+            // Fallback: djb2 simple hash (not for production)
+            let hash = 5381;
+            for (let i = 0; i < text.length; i++) hash = ((hash << 5) + hash) + text.charCodeAt(i);
+            return ('00000000' + (hash >>> 0).toString(16)).slice(-8);
+        }
+
+        function getUserByEmail(email) {
+            return new Promise((resolve, reject) => {
+                const tx = db.transaction([USERS_STORE], 'readonly');
+                const store = tx.objectStore(USERS_STORE);
+                const req = store.get(email);
+                req.onsuccess = () => resolve(req.result || null);
+                req.onerror = () => reject(req.error);
+            });
+        }
+
+        function saveUser(user) {
+            return new Promise((resolve, reject) => {
+                const tx = db.transaction([USERS_STORE], 'readwrite');
+                const store = tx.objectStore(USERS_STORE);
+                const req = store.put(user);
+                req.onsuccess = () => resolve(true);
+                req.onerror = () => reject(req.error);
+            });
+        }
+
+        function setSession(user) {
+            localStorage.setItem('authUser', JSON.stringify({ email: user.email, name: user.name }));
+            // Sync account details for prefill
+            localStorage.setItem(ACCOUNT_KEY, JSON.stringify({ name: user.name || '', email: user.email }));
+            updateAuthUI();
+        }
+
+        function clearSession() {
+            localStorage.removeItem('authUser');
+            updateAuthUI();
+        }
+
+        function getSession() {
+            try { return JSON.parse(localStorage.getItem('authUser')); } catch { return null; }
+        }
+
+        function updateAuthUI() {
+            const session = getSession();
+            const loginNav = document.getElementById('nav-login');
+            const settingsNav = document.getElementById('nav-settings');
+            const logoutBtn = document.getElementById('logoutBtn');
+            const navLinks = document.querySelectorAll('.site-nav .nav-link');
+            if (session) {
+                if (loginNav) loginNav.textContent = 'Account';
+                if (loginNav) loginNav.setAttribute('href', '#settings');
+                if (logoutBtn) logoutBtn.style.display = 'inline-block';
+                // Show all links
+                navLinks.forEach(a => {
+                    const href = a.getAttribute('href') || '';
+                    if (href === '#login') return; // will act as Account
+                    a.parentElement.style.display = '';
+                });
+            } else {
+                if (loginNav) loginNav.textContent = 'Login';
+                if (loginNav) loginNav.setAttribute('href', '#login');
+                if (logoutBtn) logoutBtn.style.display = 'none';
+                // Hide all links except Login
+                navLinks.forEach(a => {
+                    const href = a.getAttribute('href') || '';
+                    if (href === '#login') {
+                        a.parentElement.style.display = '';
+                    } else {
+                        a.parentElement.style.display = 'none';
+                    }
+                });
+            }
+        }
+
+        // Load and display bookings
+        async function loadBookings() {
+            const bookingsList = document.getElementById('bookings-list');
+            bookingsList.innerHTML = '<div class="spinner"></div>';
+            
+            try {
+                const bookings = await getAllBookings();
+                
+                if (bookings.length === 0) {
+                    bookingsList.innerHTML = '<p>No bookings found.</p>';
+                    return;
+                }
+                
+                bookingsList.innerHTML = '';
+                
+                bookings.sort((a, b) => new Date(b.date) - new Date(a.date)).forEach(booking => {
+                    const bookingDate = new Date(booking.date).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+                    
+                    const bookingItem = document.createElement('div');
+                    bookingItem.className = 'booking-item';
+                    bookingItem.innerHTML = `
+                        <div class="booking-info">
+                            <h3>${booking.event}</h3>
+                            <p><strong>Category:</strong> ${booking.category}</p>
+                            <p><strong>Name:</strong> ${booking.name}</p>
+                            <p><strong>Email:</strong> ${booking.email}</p>
+                            <p><strong>Booked on:</strong> ${bookingDate}</p>
+                            <p><strong>Status:</strong> <span class="status">${booking.status}</span></p>
+                        </div>
+                        <div class="booking-actions">
+                            <button class="btn secondary delete-booking" data-id="${booking.id}">Cancel</button>
+                        </div>
+                    `;
+                    
+                    bookingsList.appendChild(bookingItem);
+                });
+                
+                // Add event listeners to delete buttons
+                document.querySelectorAll('.delete-booking').forEach(button => {
+                    button.addEventListener('click', async (e) => {
+                        const id = parseInt(e.target.getAttribute('data-id'));
+                        if (confirm('Are you sure you want to cancel this booking?')) {
+                            try {
+                                await deleteBooking(id);
+                                showToast('Booking cancelled successfully.');
+                                loadBookings(); // Reload the bookings list
+                            } catch (error) {
+                                console.error('Error deleting booking:', error);
+                                showToast('Error cancelling booking.', 'error');
+                            }
+                        }
+                    });
+                });
+            } catch (error) {
+                console.error('Error loading bookings:', error);
+                bookingsList.innerHTML = '<p>Error loading bookings. Please try again.</p>';
+            }
+        }
+
+        // Handle hash changes
+        window.addEventListener('hashchange', function() {
+            const hash = window.location.hash.substring(1);
+            navigateTo(hash || 'home');
+        });
+
+        // Initial navigation
+        const initialHash = window.location.hash.substring(1);
+        navigateTo(initialHash || 'login');
+
+        // Set up navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = this.getAttribute('href').substring(1);
+                navigateTo(target);
+            });
+        });
+
+        // Handle booking forms (exclude settings/account and auth forms via data-category presence)
+        document.querySelectorAll('.booking-form').forEach(form => {
+            if (!form.hasAttribute('data-category')) return;
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const formData = {
+                    category: this.getAttribute('data-category'),
+                    event: this.querySelector('[name="event"]').value,
+                    name: this.querySelector('[name="name"]').value,
+                    email: this.querySelector('[name="email"]').value
+                };
+                
+                try {
+                    // Store booking in database
+                    const bookingId = await addBooking(formData);
+                    
+                    // Store booking data for payment page
+                    sessionStorage.setItem('currentBooking', JSON.stringify({
+                        ...formData,
+                        id: bookingId
+                    }));
+                    
+                    // Navigate to payment page
+                    navigateTo('payment');
+                    
+                    // Update payment summary
+                    document.getElementById('summaryCategory').textContent = formData.category;
+                    document.getElementById('summaryEvent').textContent = formData.event;
+                    document.getElementById('summaryName').textContent = formData.name;
+                    document.getElementById('summaryEmail').textContent = formData.email;
+                } catch (error) {
+                    console.error('Error saving booking:', error);
+                    showToast('Error saving booking. Please try again.', 'error');
+                }
+            });
+        });
+
+        // Handle payment form
+        document.getElementById('paymentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const submitBtn = this.querySelector('button[type="submit"]');
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.dataset.originalText = submitBtn.textContent || 'Pay Now';
+                submitBtn.textContent = 'Processing...';
+            }
+            showToast('Payment successful! Your booking is confirmed.');
+            
+            // Clear booking data
+            sessionStorage.removeItem('currentBooking');
+            
+            // Navigate back to home after a delay
+            setTimeout(() => navigateTo('home'), 2000);
+            // Re-enable button shortly after navigation (in case navigation is prevented)
+            setTimeout(() => {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = submitBtn.dataset.originalText || 'Pay Now';
+                }
+            }, 2100);
+        });
+
+        // Handle contact form
+        document.getElementById('contactForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                name: this.querySelector('[name="name"]').value,
+                email: this.querySelector('[name="email"]').value,
+                message: this.querySelector('[name="message"]').value
+            };
+            
+            try {
+                await addContactSubmission(formData);
+                showToast('Message sent successfully! We will get back to you soon.');
+                this.reset();
+            } catch (error) {
+                console.error('Error saving contact submission:', error);
+                showToast('Error sending message. Please try again.', 'error');
+            }
+        });
+
+        // Handle map search
+        document.getElementById('mapSearchForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const query = document.getElementById('mapQuery').value;
+            if (query) {
+                const encodedQuery = encodeURIComponent(query + ' college campus');
+                document.getElementById('mapFrame').src = `https://www.google.com/maps?q=${encodedQuery}&output=embed`;
+            }
+        });
+
+        // Payment method toggle
+        document.getElementById('method').addEventListener('change', function() {
+            const method = this.value;
+            document.getElementById('upiRow').style.display = method === 'upi' ? 'grid' : 'none';
+            document.getElementById('cardRow').style.display = method === 'card' ? 'grid' : 'none';
+            document.getElementById('netRow').style.display = method === 'netbanking' ? 'grid' : 'none';
+        });
+
+        // Toast notification function
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast';
+            
+            if (type === 'error') {
+                toast.classList.add('error');
+            } else if (type === 'warning') {
+                toast.classList.add('warning');
+            }
+            
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Initialize the application
+        async function initApp() {
+            try {
+                await initDatabase();
+                console.log('Database initialized successfully');
+                
+                // Load and set theme preference
+                loadThemePreference();
+                initThemeToggle();
+
+                // Initialize account form and prefill forms
+                initAccountForm();
+
+                // Attach logout
+                const logoutBtn = document.getElementById('logoutBtn');
+                if (logoutBtn) {
+                    logoutBtn.addEventListener('click', () => {
+                        clearSession();
+                        showToast('Logged out.');
+                        navigateTo('home');
+                    });
+                }
+
+                // Toggle between sign in and sign up forms
+                const showSignIn = document.getElementById('showSignIn');
+                const showSignUp = document.getElementById('showSignUp');
+                const signInForm = document.getElementById('signInForm');
+                const signUpForm = document.getElementById('signUpForm');
+                if (showSignIn && showSignUp && signInForm && signUpForm) {
+                    showSignIn.addEventListener('click', () => {
+                        signInForm.style.display = '';
+                        signUpForm.style.display = 'none';
+                    });
+                    showSignUp.addEventListener('click', () => {
+                        signInForm.style.display = 'none';
+                        signUpForm.style.display = '';
+                    });
+                }
+
+                // Sign Up submit
+                if (signUpForm) {
+                    signUpForm.addEventListener('submit', async (e) => {
+                        e.preventDefault();
+                        const name = document.getElementById('signupName').value.trim();
+                        const email = document.getElementById('signupEmail').value.trim().toLowerCase();
+                        const password = document.getElementById('signupPassword').value;
+                        const confirm = document.getElementById('signupConfirm').value;
+                        if (password !== confirm) {
+                            showToast('Passwords do not match.', 'error');
+                            return;
+                        }
+                        try {
+                            const existing = await getUserByEmail(email);
+                            if (existing) {
+                                showToast('An account already exists with this email.', 'warning');
+                                return;
+                            }
+                            const passwordHash = await hashText(password);
+                            await saveUser({ email, name, passwordHash, createdAt: new Date().toISOString() });
+                            showToast('Account created. You can log in now.');
+                            // Switch to sign in
+                            if (showSignIn) showSignIn.click();
+                            // Prefill sign in email
+                            const loginEmail = document.getElementById('loginEmail');
+                            if (loginEmail) loginEmail.value = email;
+                        } catch (err) {
+                            console.error(err);
+                            showToast('Error creating account.', 'error');
+                        }
+                    });
+                }
+
+                // Sign In submit
+                if (signInForm) {
+                    signInForm.addEventListener('submit', async (e) => {
+                        e.preventDefault();
+                        const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+                        const password = document.getElementById('loginPassword').value;
+                        try {
+                            const user = await getUserByEmail(email);
+                            if (!user) {
+                                showToast('No account found for this email.', 'warning');
+                                return;
+                            }
+                            const passwordHash = await hashText(password);
+                            if (passwordHash !== user.passwordHash) {
+                                showToast('Invalid credentials.', 'error');
+                                return;
+                            }
+                            setSession(user);
+                            showToast('Logged in successfully.');
+                            navigateTo('settings');
+                            // Populate account fields
+                            const acc = { name: user.name || '', email: user.email };
+                            localStorage.setItem(ACCOUNT_KEY, JSON.stringify(acc));
+                            loadAccountDetails();
+                        } catch (err) {
+                            console.error(err);
+                            showToast('Error logging in.', 'error');
+                        }
+                    });
+                }
+
+                // Reflect auth state in nav
+                updateAuthUI();
+
+                // Initialize payment method visibility
+                document.getElementById('method').dispatchEvent(new Event('change'));
+                
+                // Check if we have a booking in session storage for payment page
+                if (window.location.hash === '#payment') {
+                    const bookingData = sessionStorage.getItem('currentBooking');
+                    if (bookingData) {
+                        const booking = JSON.parse(bookingData);
+                        document.getElementById('summaryCategory').textContent = booking.category;
+                        document.getElementById('summaryEvent').textContent = booking.event;
+                        document.getElementById('summaryName').textContent = booking.name;
+                        document.getElementById('summaryEmail').textContent = booking.email;
+                    }
+                }
+
+                // UI: scroll and header behaviors
+                const toTopBtn = document.getElementById('toTop');
+                function handleScrollUI() {
+                    const scrolled = window.scrollY || document.documentElement.scrollTop;
+                    const header = document.querySelector('.site-header');
+                    if (header) {
+                        if (scrolled > 80) header.classList.add('shrink');
+                        else header.classList.remove('shrink');
+                    }
+                    if (toTopBtn) {
+                        if (scrolled > 400) toTopBtn.classList.add('show');
+                        else toTopBtn.classList.remove('show');
+                    }
+                }
+                window.addEventListener('scroll', handleScrollUI, { passive: true });
+                if (toTopBtn) {
+                    toTopBtn.addEventListener('click', () => {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    });
+                }
+                handleScrollUI();
+
+                // Form UX: card number formatting and basic UPI check
+                const cardNumberInput = document.getElementById('cardNumber');
+                if (cardNumberInput) {
+                    cardNumberInput.addEventListener('input', () => {
+                        const digits = cardNumberInput.value.replace(/\D/g, '').slice(0, 19);
+                        cardNumberInput.value = digits.replace(/(\d{4})(?=\d)/g, '$1 ');
+                    });
+                }
+                const upiInput = document.getElementById('upiId');
+                if (upiInput) {
+                    upiInput.addEventListener('blur', () => {
+                        const value = (upiInput.value || '').trim();
+                        if (!value) return;
+                        const isValid = /^[\w.\-]{2,}@[A-Za-z]{2,}$/.test(value);
+                        if (!isValid) {
+                            showToast('Please enter a valid UPI ID (e.g., name@bank)', 'warning');
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('Error initializing application:', error);
+                showToast('Error initializing application. Some features may not work.', 'error');
+            }
+        }
+
+        // Initialize the app when the DOM is fully loaded
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initApp);
+        } else {
+            initApp();
+        }
+    -->
+</body>
+</html>
