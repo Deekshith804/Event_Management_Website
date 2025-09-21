@@ -1,0 +1,45 @@
+# GitHub Pages Configuration
+title: EVENT EASE
+description: College Event Management System
+baseurl: ""
+url: "https://yourusername.github.io"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: minima
+
+# Exclude files from processing
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+
+# Include files
+include:
+  - _pages
+
+# Collections
+collections:
+  pages:
+    output: true
+    permalink: /:name/
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# SEO settings
+author: Your Name
+twitter:
+  username: yourusername
+  card: summary
+
+social:
+  name: EVENT EASE
+  links:
+    - https://github.com/yourusername/event-ease
